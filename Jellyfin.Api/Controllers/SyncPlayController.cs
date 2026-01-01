@@ -97,6 +97,19 @@ public class SyncPlayController : BaseJellyfinApiController
     }
 
     /// <summary>
+    /// Test.
+    /// </summary>
+    /// <response code="204">This is a test.</response>
+    /// <returns>A <see cref="NoContentResult"/> indicating success.</returns>
+    [HttpGet("Test")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<ActionResult> Test()
+    {
+        await Task.Delay(1);
+        return NoContent();
+    }
+
+    /// <summary>
     /// Gets all SyncPlay groups.
     /// </summary>
     /// <response code="200">Groups returned.</response>
