@@ -432,7 +432,9 @@ public class SyncPlayController : BaseJellyfinApiController
     [Authorize(Policy = Policies.SyncPlayIsInGroup)]
     public async Task<ActionResult> SyncPlaySetPlaybackSpeed([FromBody, Required] SetPlaybackSpeedRequestDto requestData)
     {
-        await Task.Delay(100);
+        var currentSession = await RequestHelpers.GetSession(_sessionManager, _userManager, HttpContext).ConfigureAwait(false);
+        var syncPlayRequest = new SetPlaybackSpeedGroupRequest(requestData.PlaybackSpeed);
+        _syncPlayManager.HandleRequest(currentSession, syncPlayRequest, CancellationToken.None);
         return NoContent();
     }
 
