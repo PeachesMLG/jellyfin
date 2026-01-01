@@ -111,7 +111,7 @@ jobs:
                 printf "\n${file}\n${COMPAT_OUTPUT}\n"
               fi
             done
-            echo EOF
+            echo 'EOF'
           } >> $GITHUB_OUTPUT
 
       - name: Find difference comment
