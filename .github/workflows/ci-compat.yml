@@ -111,8 +111,8 @@ jobs:
                 printf "\n${file}\n${COMPAT_OUTPUT}\n"
               fi
             done
-            echo 'EOF'
-          } | cat
+            echo EOF
+          } >> $GITHUB_OUTPUT
 
       - name: Find difference comment
         uses: peter-evans/find-comment@b30e6a3c0ed37e7c023ccd3f1db5c6c0b0c23aad # v4.0.0
