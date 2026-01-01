@@ -97,19 +97,6 @@ public class SyncPlayController : BaseJellyfinApiController
     }
 
     /// <summary>
-    /// Test.
-    /// </summary>
-    /// <response code="204">This is a test.</response>
-    /// <returns>A <see cref="NoContentResult"/> indicating success.</returns>
-    [HttpGet("Test")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult> Test()
-    {
-        await Task.Delay(1);
-        return NoContent();
-    }
-
-    /// <summary>
     /// Gets all SyncPlay groups.
     /// </summary>
     /// <response code="200">Groups returned.</response>
@@ -431,6 +418,21 @@ public class SyncPlayController : BaseJellyfinApiController
         var currentSession = await RequestHelpers.GetSession(_sessionManager, _userManager, HttpContext).ConfigureAwait(false);
         var syncPlayRequest = new SetShuffleModeGroupRequest(requestData.Mode);
         _syncPlayManager.HandleRequest(currentSession, syncPlayRequest, CancellationToken.None);
+        return NoContent();
+    }
+
+    /// <summary>
+    /// Request to set playback speed in SyncPlay group.
+    /// </summary>
+    /// <param name="requestData">The new playback speed.</param>
+    /// <response code="204">Playback speed update sent to all group members.</response>
+    /// <returns>A <see cref="NoContentResult"/> indicating success.</returns>
+    [HttpPost("SetPlaybackSpeed")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [Authorize(Policy = Policies.SyncPlayIsInGroup)]
+    public async Task<ActionResult> SyncPlaySetPlaybackSpeed([FromBody, Required] SetPlaybackSpeedRequestDto requestData)
+    {
+        await Task.Delay(100);
         return NoContent();
     }
 
