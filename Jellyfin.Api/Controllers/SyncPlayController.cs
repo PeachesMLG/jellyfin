@@ -437,4 +437,21 @@ public class SyncPlayController : BaseJellyfinApiController
         _syncPlayManager.HandleRequest(currentSession, syncPlayRequest, CancellationToken.None);
         return NoContent();
     }
+
+    /// <summary>
+    /// Update session ping.
+    /// </summary>
+    /// <param name="requestData">The new ping.</param>
+    /// <response code="204">Ping updated.</response>
+    /// <returns>A <see cref="NoContentResult"/> indicating success.</returns>
+    [HttpPost("Test")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<ActionResult> SyncPlayTestPing(
+        [FromBody, Required] PingRequestDto requestData)
+    {
+        var currentSession = await RequestHelpers.GetSession(_sessionManager, _userManager, HttpContext).ConfigureAwait(false);
+        var syncPlayRequest = new PingGroupRequest(requestData.Ping);
+        _syncPlayManager.HandleRequest(currentSession, syncPlayRequest, CancellationToken.None);
+        return NoContent();
+    }
 }
